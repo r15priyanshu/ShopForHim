@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>SHOP FOR HIM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<style rel="stylesheet">
+.product_box{
+  box-shadow: 2px 2px 15px #fff591;
+  padding: 5px;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 1%;
+}
+
+
+body{
+  background-image:url("images/backgrounds/10.jpg");
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style>
+
+<body>
+
+  <%-include("partials/navigation");-%>
+<!-- main container -->
+  <div class="container mainContainer" style="margin-top:10px;margin-bottom:100px;">
+
+
+    <div class="container category">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-8">
+          <form class="form" method="POST" action="/category">
+            <label class="my-1 mr-2 text-light" for="inlineFormCustomSelectPref"><b>CATEGORY</b></label>
+            <select class="custom-select my-1 mr-sm-2" id="select_category" onchange="run()">
+              <option selected>Choose From Here..</option>
+              <option value="all" name="watches">All</option>
+              <option value="watches" name="watches">Watches</option>
+              <option value="shirt"  name="shirt">Shirt</option>
+              <option value="jeans"  name="jeans">Jeans</option>
+            </select>
+            <input type="text"class="form-control" name="category" value="" id="category_input" hidden>
+            <button type="submit" class="btn btn-primary my-1">Apply</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="productsContainer container">
+
+      <%if(success_msg !=""){ %>
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%=success_msg%>
+        </div>
+      <%}%>
+
+      <%if(error_msg !=""){ %>
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%=error_msg%>
+        </div>
+      <%}%>
+
+      <%if(products.length>0){%>
+
+
+              <% for(let product of products.reverse()){ %>
+                <div class="row product_box" style="margin-top:40px;">
+                  <div class="col-md-12">
+
+                    <div class="media">
+                      <img src="/uploads/shopforhim/<%=product.image%>" class="align-self-center mr-3" alt="product photos" height="200px" width="200px">
+                      <div class="media-body">
+                        <div class="product details">
+
+                          <form class="" action="products/addToCart/<%=product._id%>" method="post">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">BRAND : </label>
+                              </div>
+                              <div class="col-md-10">
+                                <b><u><%=product.brand%></u></b>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">TITLE : </label>
+                              </div>
+                              <div class="col-md-10">
+                                <%=product.title%>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">DESCRIPTION : </label>
+                              </div>
+                              <div class="col-md-10">
+                                <%=product.description%>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">SIZE : </label>
+                              </div>
+                              <div class="col-md-10">
+
+                                <%if(product.category=="shirt"){%>
+                                  <select class="custom-select my-1 " id="select_size_shirt" name="Selected_Size">
+                                    <option value="S" name="S">S</option>
+                                    <option value="M" name="M">M</option>
+                                    <option value="L"  name="L">L</option>
+                                    <option value="XL"  name="XL">XL</option>
+                                  </select>
+                                <%}%>
+                                <%if(product.category=="jeans"){%>
+                                  <select class="custom-select my-1 mr-sm-2" id="select_size_jeans"name="Selected_Size">
+                                    <option value="30" name="30">30</option>
+                                    <option value="32" name="32">32</option>
+                                    <option value="34"  name="34">34</option>
+                                    <option value="36"  name="36">36</option>
+                                    <option value="38"  name="38">38</option>
+                                    <option value="40"  name="40">40</option>
+                                  </select>
+                                <%}%>
+                                <%if(product.category=="watches"){%>
+                                  <select class="custom-select my-1 mr-sm-2" id="select_size_shirt" name="Selected_Size">
+                                    <option value="Small" name="small">Small</option>
+                                    <option value="Medium" name="medium">Medium</option>
+                                    <option value="Large"  name="large">Large</option>
+                                    <option value="OneSize"  name="onesize">OneSize</option>
+                                  </select>
+                                <%}%>
+
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">CATEGORY : </label>
+                              </div>
+                              <div class="col-md-10">
+                                <%=product.category%>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label class="text-info">PRICE : </label>
+                              </div>
+                              <div class="col-md-10">
+                                <strong>Rs.<%=product.price%>.00</strong>
+                              </div>
+                            </div>
+                            <button type="submit" name="button"  class="btn btn-info btn-sm">Add to cart</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            <%}%>
+
+
+      <%}else{%>
+        <div class="alert alert-dismissible alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            Sorry !! Nothing to show Here.
+        </div>
+      <%}%>
+
+  </div>
+</div>
+  <!-- end of  mainContainer-->
+
+
+  <script>
+    function run() {
+      document.getElementById("category_input").value = document.getElementById("select_category").value;
+  }
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>

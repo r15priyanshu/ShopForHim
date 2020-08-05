@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title><%=user.fname%> <%=user.lname%></title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <style rel="stylesheet">
+    body{
+      background-image: url("images/backgrounds/7.jpg");
+      background-position: center;
+      background-attachment: fixed;
+      background-size:cover;
+    }
+
+    .cartDetails{
+     margin-left: 0px;
+     margin-right: 0px;
+     margin-top:10px;
+     margin-bottom:10px;
+     padding-top: 25px;
+     padding-bottom: 25px;
+     padding-right: 25px;
+    padding-left: 25px;
+    box-shadow: inset 0 0 10px grey;
+    }
+
+    #profile-column{
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0px 0px 15px 5px black;
+      padding: 5px;
+      border-radius: 1%;
+      margin-top:25px;
+    }
+
+    #nav-cart{
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius:15px;
+      min-height: 500px;
+      padding-top: 25px;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    .mytab{
+      color:white;
+    }
+
+    .mytab:hover{
+      color:white;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <%-include("partials/navigation");-%>
+<!-- main container -->
+<div class="container">
+
+        <nav style="margin-top:10px;margin-bottom:10px;">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active mytab" id="nav-cart-tab " data-toggle="tab" href="#nav-cart" role="tab" aria-controls="nav-home" aria-selected="true">Cart Items</a>
+            <a class="nav-item nav-link ml-auto mytab" id="nav-profile-tab " data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-contact" aria-selected="false">Profile<i class="fa fa-user" aria-hidden="true"></i></a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <!-- start of cart tab -->
+          <div class="tab-pane fade show active" id="nav-cart" role="tabpanel" aria-labelledby="nav-cart-tab">
+
+                <%if(typeof cartItems=="undefined" ){%>
+                  <div class="alert alert-dismissible alert-info">
+                      Your Cart Is Empty!! Please add some items to the cart First.
+                  </div>
+                <%}else{%>
+                  <div class="">
+                      <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6 col-sm-6" >
+                          <div class="row cartDetails">
+                            <div class="col-md-6 text-center">
+                              <p style="margin-top:8px;margin-bottom:8px;"><b>Total Cart Items : <%=user.cart.length%> </b></p>
+                              <p style="margin-top:8px;margin-bottom:8px;"><b>Total Cart Value : Rs.<%=sum%> </b></p>
+                            </div>
+                            <div class="col-md-6 text-center">
+                              <p  style="margin-top:8px;margin-bottom:8px;"> <a href="/profile/checkout" class="btn btn-sm btn-info">CheckOut</a></p>
+                              <p  style="margin-top:8px;margin-bottom:8px;"> <a href="/products" class="btn btn-sm btn-outline-success">Products</a></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="">
+                    <table class="table">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Brand</th>
+                              <th scope="col">Item Name</th>
+                              <th scope="col">Size</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Remove</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <%for(let eachcartitem of cartItems.reverse()){%>
+                              <tr>
+                                <th scope="row"> <img src="/Uploads/shopforhim/<%=eachcartitem.image%>" alt="cart item photo" height="50px" width="50px"> </th>
+                                <td><b><%=eachcartitem.brand%></b></td>
+                                <td><%=eachcartitem.title%></td>
+                                <td><%=eachcartitem.selected_size%></td>
+                                <td><b>Rs.<%=eachcartitem.price%></b></td>
+                                <td>
+                                  <form class="" action="/products/removeFromCart/<%=eachcartitem.cart_item_id%>" method="post">
+                                    <button type="submit" name="button" class="btn btn-sm btn-outline-dark">Remove</button>
+                                  </form>
+                                </td>
+                              </tr>
+                            <%}%>
+
+                          </tbody>
+                        </table>
+                  </div>
+                  <!-- end of table container -->
+                <%}%>
+          </div>
+          <!-- end of cart tab -->
+
+          <!-- start of profile tab -->
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="container">
+              <div id="profile-row" class="row justify-content-center align-items-center">
+                <div id="profile-column" class="col-md-6">
+                  <div id="profile-box" class="col-md-12">
+
+                  <%if(error_msg !=""){ %>
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <%=error_msg%>
+                    </div>
+                  <%}%>
+                    <form id="profile-form" class="form" action="/profile/updateProfile" method="post">
+                      <h3 class="text-center text-info">Profile Details!</h3>
+
+                      <div class="form-group">
+                        <label class="text-info">First Name</label>
+                        <input type="text" class="form-control" name="fname" placeholder="Enter first name" value="<%=user.fname%>" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="text-info">Last Name</label>
+                        <input type="text" class="form-control" name="lname" placeholder="Enter last name" value="<%=user.lname%>" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="text-info">Email</label>
+                        <input type="text" autocomplete="false" class="form-control" name="username" placeholder="Enter email" readonly value="<%=user.username%>">
+                      </div>
+                      <div class="form-group">
+                        <label class="text-info">Mobile</label>
+                        <input type="text" autocomplete="false" class="form-control" name="mobile" placeholder="Enter mobile number" value="<%=user.mobile%>" required>
+                      </div>
+                      <div class="form-group">
+                        <label class="text-info">Address</label>
+                        <input type="text" autocomplete="false" class="form-control" name="address" placeholder="Enter Address" value="<%=user.address%>" required>
+                      </div>
+                      <button type="submit" name="button" class="btn btn-info">Update Profile</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <!-- end of profile tab -->
+
+      </div>
+  <!--end of tab container  -->
+</div>
+<!-- end of main container -->
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>

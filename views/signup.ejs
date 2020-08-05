@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>SignUp</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet"> 
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <style rel="stylesheet">
+
+    body{
+      background-image:url("/images/backgrounds/9.jpg");
+      background-position: center;
+      background-attachment: fixed;
+      background-size:cover;
+    }
+
+    #signup-column{
+      box-shadow: 0px 0px 15px 5px  grey;
+      padding: 5px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 1%;
+      margin-top:50px;
+    }
+
+    .myinput{
+      border-radius: 25px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <%-include("partials/navigation");-%>
+
+  <div id="signup">
+    <div class="container">
+      <div id="Signup-row" class="row justify-content-center align-items-center">
+        <div id="signup-column" class="col-md-6">
+          <div id="signup-box" class="col-md-12">
+
+          <%if(error_msg !=""){ %>
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%=error_msg%>
+            </div>
+          <%}%>
+          <%if(typeof err !="undefined"){ %>
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%=err%>
+            </div>
+          <%}%>
+
+            <form id="signup-form" class="form" action="/home/signup" method="post">
+              <h3 class="text-center text-info">Sign Up Now!</h3>
+
+              <div class="form-group">
+                <label class="text-info">First Name</label>
+                <input type="text" class="form-control myinput" name="fname" placeholder="Enter first name">
+              </div>
+              <div class="form-group">
+                <label class="text-info">Last Name</label>
+                <input type="text" class="form-control myinput" name="lname" placeholder="Enter last name">
+              </div>
+              <div class="form-group">
+                <label class="text-info">Username</label>
+                <input type="text" class="form-control myinput" name="uniqueusername" placeholder="Enter Unique Username">
+              </div>
+
+              <div class="form-group">
+                <label class="text-info">Email</label>
+                <input type="text" autocomplete="false" class="form-control myinput" name="username" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label class="text-info">Password</label>
+                <input type="password" autocomplete="off" class="form-control myinput" name="password" placeholder="Enter password">
+              </div>
+              <button type="submit" name="button" class="btn btn-info">SignUp</button>
+              <div id="login-link" class="text-right">
+                <a href="/home/login" class="text-info">Login Instead!</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>

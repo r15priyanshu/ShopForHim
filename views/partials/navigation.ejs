@@ -1,0 +1,46 @@
+<div class="navigation">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left: 60px;padding-right: 60px;">
+    <div class="">
+      <i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
+
+
+    <a class="navbar-brand" href="#"><p class="brand">SHOP FOR HIM</p></a>
+    </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item myNavItem">
+        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item myNavItem">
+        <a class="nav-link" href="/products">Products</a>
+      </li>
+      <%if(typeof user !="undefined"){%>
+        <li class="nav-item myNavItem">
+          <a class="nav-link" href="/profile"><i class="fa fa-shopping-cart" aria-hidden="true">(<%=user.cart.length%>)</i></a>
+        </li>
+      <%}%>
+      <li class="nav-item dropdown myNavItem">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           User <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%if(typeof user =="undefined"){%>
+              <a class="dropdown-item" href="/home/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+              <a class="dropdown-item" href="/home/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Signup</a>
+          <%}else{%>
+            <a class="dropdown-item" href="/home/logout"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a>
+            <a class="dropdown-item" href="/profile/myOrders"><i class="fa fa-briefcase" aria-hidden="true"></i> My Orders</a>
+          <%}%>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+</div>
