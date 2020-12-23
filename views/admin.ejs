@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -11,22 +10,22 @@
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
-  <title>ADD PRODUCTS</title>
+  <title>Admin Login</title>
   <style rel="stylesheet">
 
     body{
-      background-image:url("/images/backgrounds/3.jpg");
+      background-image:url("/images/backgrounds/4.jpg");
       background-position: center;
       background-attachment: fixed;
       background-size:cover;
     }
 
-    #add-column{
+    #admin-column{
       box-shadow: 0px 0px 15px 5px  black;
       padding: 5px;
       background-color: rgba(255,255,255,0.9);
       border-radius: 1%;
-      margin-top:5px;
+      margin-top:100px;
     }
 
     .myinput{
@@ -39,16 +38,21 @@
 
 <body>
 
-    <div id="add">
+    <div id="admin">
         <div class="container">
-            <div id="add-row" class="row justify-content-center align-items-center">
-                <div id="add-column" class="col-md-6">
-                    <div id="add-box" class="col-md-12">
-
+            <div id="admin-row" class="row justify-content-center align-items-center">
+                <div id="admin-column" class="col-md-6">
+                    <div id="admin-box" class="col-md-12">
                       <%if(success_msg !=""){ %>
                         <div class="alert alert-dismissible alert-success">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             <%=success_msg%>
+                        </div>
+                      <%}%>
+                      <%if(error!=""){ %>
+                        <div class="alert alert-dismissible alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <%=error%>
                         </div>
                       <%}%>
                       <%if(error_msg !=""){ %>
@@ -57,39 +61,19 @@
                             <%=error_msg%>
                         </div>
                       <%}%>
-                        <form id="add-form" class="form" action="/add" method="post" enctype="multipart/form-data">
-                            <h3 class="text-center text-info">ADD PRODUCT DETAILS</h3>
+                        <form id="admin-form" class="form" action="/home/admin" method="post">
+                            <h3 class="text-center text-info">Admin Access</h3>
                             <div class="form-group">
-                                <label class="text-info">Brand:</label><br>
-                                <input type="text" name="brand" class="form-control myinput" value="" placeholder="enter brand name" required>
+                                <label for="username" class="text-info">Username:</label><br>
+                                <input type="text" name="username" id="username" class="form-control myinput" placeholder="Enter Admin Username">
                             </div>
                             <div class="form-group">
-                                  <label class="text-info">Title:</label><br>
-                                  <input type="text" name="title" value="" placeholder="enter title" class="form-control myinput" required>
+                                <label for="password" class="text-info">Password:</label><br>
+                                <input type="password" name="password" id="password" class="form-control myinput" placeholder="Enter Password">
                             </div>
-                            <div class="form-group">
-                                  <label class="text-info">Description:</label><br>
-                                  <input type="text" name="description" value="" placeholder="enter description" class="form-control myinput" required>
-                            </div>
-                            <div class="form-group">
-                                  <label class="text-info">Category:</label><br>
-                                  <input type="text" name="category" value="" placeholder="enter category" class="form-control myinput" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="text-info">Price:</label><br>
-                                <input type="text" name="price" value="" placeholder="enter price" class="form-control myinput" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="text-info">Size:</label><br>
-                                <input type="text" name="size" value="" placeholder="enter size" class="form-control myinput" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="text-info">Image:</label><br>
-                                <input type="file" name="myimage" value="" class="form-control myinput" required>
-                            </div>
-                            <button type="submit" name="button"  class="btn btn-info">ADD</button>
-                            <a href="/home/admin/logout" class="btn btn-danger">Logout admin</a>
+                            <button type="submit" name="button"  class="btn btn-info">Login</button>
+                            <br>
+                            <a href="/"> <u> Go Back To homepage  </u></a>
                         </form>
                     </div>
                 </div>

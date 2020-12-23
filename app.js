@@ -69,7 +69,7 @@ var upload=multer({
 
 
 //mongoose connection
-mongoose.connect("mongodb://localhost:27017/ShopForMenDB", {
+mongoose.connect("mongodb://localhost:27017/ShopForHimDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(function(){
@@ -89,17 +89,6 @@ const userSchema = new mongoose.Schema({
     product_id:String,
     selected_size:String
   }],
-  purchased:[{
-    product_unique_id:String,
-    person_fullname:String,
-    person_delivery_address:String,
-    person_mobile:String,
-    person_email:String,
-    person_selected_size:String,
-    ordered_by_account:String,
-    cancelled:Number,
-    price:Number
-  }]
 });
 
 //creating product schema
@@ -192,6 +181,9 @@ app.post("/home/signup", function(req, res) {
       err: err
     });
   }
+
+
+
   if (typeof err == "undefined") {
     User.findOne({
       username: req.body.username
@@ -552,19 +544,54 @@ app.post("/profile/myOrders/cancelOrder/:order_id",function(req,res){
 
 
 
+/////////////////////////////
+/////////////////////////////
+/////////////////////////////
+// ADMIN CODE
+var admin_logged_in=false;
 
+//get route for admin login page
+app.get("/home/admin",function(req,res){
+  res.render("admin");
+});
 
+//get route for logging out admin
+app.get("/home/admin/logout",function(req,res){
+  admin_logged_in=false;
+  req.flash("success_msg","Successfully logged out")
+  res.redirect("/home/admin")
+});
 
-
-
-
-
-
-
-
-//add clothes route
+//add products route
 app.get("/add",function(req,res){
-  res.render("add");
+  if(admin_logged_in==true)
+      res.render("add");
+  else
+    res.redirect("/home/admin")
+});
+
+//Post route for validating admin details
+app.post("/home/admin",function(req,res){
+  if(req.body.username=="ADMIN")
+  {
+    if(req.body.password=="ADMIN")
+    {
+      admin_logged_in=true;
+      res.redirect("/add");
+    }
+    else
+    {
+        console.log("incorrect password for the admin account");
+        req.flash("error_msg",'SORRY ! THE PASSWORD YOU ENTERED IS INCORRECT');
+        res.redirect("/home/admin");
+    }
+  }
+  else
+  {
+    console.log("invalid admin id");
+    req.flash("error_msg",'SORRY ! INVALID ADMIN ID');
+    res.redirect("/home/admin");
+  }
 });
 
 //post request to add products to the products collection
@@ -572,7 +599,7 @@ app.post("/add",function(req,res){
   upload(req,res,function(err){
     if(err) {
         req.flash("error_msg",'Only image files are allowed!');
-        res.redirect("/home");
+        res.redirect("/add");
     }
     else{
         const newproduct = new Product({
