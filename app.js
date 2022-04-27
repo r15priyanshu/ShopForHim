@@ -602,6 +602,7 @@ app.post("/add",function(req,res){
         res.redirect("/add");
     }
     else{
+		console.log(req.body);
         const newproduct = new Product({
         brand:req.body.brand,
         title:req.body.title,
